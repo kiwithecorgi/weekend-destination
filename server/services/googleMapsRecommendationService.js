@@ -111,7 +111,9 @@ class GoogleMapsRecommendationService {
   }
 
   async generateRecommendations(params) {
-    const { city, adults, kids, hasDog, hasCar, travelTime, activities } = params;
+    const { city, adults, kids, hasDog, hasCar, timeBudget, activities } = params;
+    // Map timeBudget to travelTime for compatibility
+    const travelTime = timeBudget;
 
     try {
       console.log(`🔍 Generating Google Maps recommendations for ${city}...`);
@@ -174,7 +176,11 @@ class GoogleMapsRecommendationService {
     }
 
     try {
-      const { activities, travelTime, hasDog, kids } = params;
+      const { activities, timeBudget, hasDog, kids } = params;
+      // Map timeBudget to travelTime for compatibility
+      const travelTime = timeBudget;
+      
+
       
       // Calculate search radius based on realistic travel times
       // Assumes average speed: local roads 40km/h, highways 80km/h

@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # 🗺️ Google Maps Environment Setup Script
-# This script helps you configure the environment to use Google Maps data instead of Yelp
+# This script helps you configure the environment to use Google Maps data
 
 echo "🌟 Setting up Google Maps configuration..."
 
 # Create the new .env file focused on Google Maps
 cat > server/.env << 'ENVEOF'
 # 🌟 Weekend Destination App - Google Maps Focused Configuration
-# Use Google's comprehensive rating and business data instead of Yelp
+# Use Google's comprehensive rating and business data
 
 # Server Configuration
 PORT=5002
@@ -24,17 +24,6 @@ GOOGLE_GEOCODING_API_KEY=your_google_geocoding_api_key_here
 # Get free key from: https://openweathermap.org/api
 OPENWEATHER_API_KEY=your_openweather_api_key_here
 
-# 🔥 Firebase/Firestore Configuration (Optional - for user data)
-FIREBASE_PROJECT_ID=your_firebase_project_id
-FIREBASE_PRIVATE_KEY_ID=your_private_key_id
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour private key here\n-----END PRIVATE KEY-----\n"
-FIREBASE_CLIENT_EMAIL=your_client_email@your_project.iam.gserviceaccount.com
-FIREBASE_CLIENT_ID=your_client_id
-FIREBASE_AUTH_URI=https://accounts.google.com/o/oauth2/auth
-FIREBASE_TOKEN_URI=https://oauth2.googleapis.com/token
-FIREBASE_AUTH_PROVIDER_X509_CERT_URL=https://www.googleapis.com/oauth2/v1/certs
-FIREBASE_CLIENT_X509_CERT_URL=https://www.googleapis.com/robot/v1/metadata/x509/your_client_email%40your_project.iam.gserviceaccount.com
-
 # ⚡ Performance Configuration
 CACHE_TTL=3600
 CACHE_CHECK_PERIOD=600
@@ -47,7 +36,7 @@ CORS_ORIGIN=http://localhost:3000
 # 📝 Logging
 LOG_LEVEL=info
 
-# 🚀 Why Google Maps instead of Yelp:
+# 🚀 Why Google Maps:
 # ✅ Superior location coverage
 # ✅ More accurate ratings and reviews
 # ✅ Integrated photos and business info

@@ -1,27 +1,14 @@
 #!/bin/bash
 
-echo "🧹 COMPREHENSIVE FIX & STARTUP SCRIPT"
-echo "======================================"
+echo "🧹 COMPREHENSIVE CLEANUP & STARTUP SCRIPT"
+echo "=========================================="
 
 # Kill all existing processes
 echo "🔄 Killing existing processes..."
 pkill -f "node index.js" 2>/dev/null || true
 pkill -f "nodemon" 2>/dev/null || true
 pkill -f "react-scripts" 2>/dev/null || true
-sleep 3
-
-# Remove all Firebase and old service files
-echo "🗑️ Removing Firebase and old service files..."
-rm -f server/config/firebase.js 2>/dev/null || true
-rm -f server/services/recommendationService.js 2>/dev/null || true
-rm -f server/services/recommendationService.js.old 2>/dev/null || true
-rm -rf server/services/enhanced 2>/dev/null || true
-rm -f server/routes/feedback.js 2>/dev/null || true
-rm -f server/routes/places.js 2>/dev/null || true
-rm -f server/routes/recommendations.js 2>/dev/null || true
-rm -f server/routes/recommendations.js.old 2>/dev/null || true
-rm -f server/routes/googleMapsRecommendations.js 2>/dev/null || true
-rm -f server/routes/googleMapsRecommendations.js.old 2>/dev/null || true
+sleep 2
 
 # Clean up node_modules and reinstall
 echo "📦 Cleaning and reinstalling server dependencies..."
@@ -57,7 +44,7 @@ echo "⏳ Waiting for client to be ready..."
 sleep 10
 
 echo ""
-echo "🎉 FIX COMPLETE! Your app should be running at:"
+echo "🎉 CLEANUP COMPLETE! Your app should be running at:"
 echo "   🌐 Frontend: http://localhost:3000"
 echo "   🔧 Backend: http://localhost:5002"
 echo "   🏥 Health: http://localhost:5002/health"

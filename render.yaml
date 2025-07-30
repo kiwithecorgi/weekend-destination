@@ -18,12 +18,6 @@ services:
         sync: false
       - key: OPENWEATHER_API_KEY
         sync: false
-      - key: FIREBASE_PROJECT_ID
-        sync: false
-      - key: FIREBASE_PRIVATE_KEY
-        sync: false
-      - key: FIREBASE_CLIENT_EMAIL
-        sync: false
 
   # Frontend Static Site
   - type: static
