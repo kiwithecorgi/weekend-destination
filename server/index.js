@@ -1,13 +1,22 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const GoogleMapsRecommendationService = require('./services/googleMapsRecommendationService');
+
+// Try to load Google Maps service, but don't fail if it doesn't work
+let GoogleMapsRecommendationService;
+let recommendationService;
+
+try {
+  GoogleMapsRecommendationService = require('./services/googleMapsRecommendationService');
+  recommendationService = new GoogleMapsRecommendationService();
+  console.log('✅ Google Maps service loaded successfully');
+} catch (error) {
+  console.log('⚠️ Google Maps service not available, using fallback mode');
+  recommendationService = null;
+}
 
 const app = express();
 const PORT = process.env.PORT || 5002;
-
-// Initialize Google Maps service
-const recommendationService = new GoogleMapsRecommendationService();
 
 app.use(cors());
 app.use(express.json());
@@ -37,7 +46,63 @@ app.post('/api/recommendations', async (req, res) => {
     console.log(`✅ Google Maps recommendation request received for: ${city}`);
     console.log(`🎯 Selected activities: ${req.body.activities?.join(', ') || 'None'}`);
     
-    const result = await recommendationService.generateRecommendations(req.body);
+    // Use Google Maps service if available, otherwise use fallback
+    let result;
+    if (recommendationService) {
+      result = await recommendationService.generateRecommendations(req.body);
+    } else {
+      // Fallback response
+      result = {
+        success: true,
+        demoMode: true,
+        packs: [
+          {
+            core: { 
+              name: `Top-Rated Family Destination in ${city}`, 
+              description: 'A highly-rated Google Maps location perfect for family adventures',
+              rating: 4.7, 
+              reviewCount: 342,
+              vicinity: city, 
+              dogFriendly: req.body.hasDog || false, 
+              kidFriendly: req.body.kids > 0,
+              priceLevel: 1,
+              googleData: {
+                placeId: 'demo_place_1',
+                phone: null,
+                website: null,
+                isOpen: true,
+                photos: []
+              }
+            },
+            eta: { durationText: '15 mins' },
+            spokes: [
+              { name: 'Family-Friendly Café', type: 'restaurant' },
+              { name: 'Local Playground', type: 'park' }
+            ],
+            itinerary: [
+              {
+                activity: "Arrival & Exploration",
+                duration: "30 min",
+                description: "Get oriented and explore the area"
+              },
+              {
+                activity: "Main Family Activity", 
+                duration: "90 min",
+                description: "Enjoy quality time with family and pets"
+              },
+              {
+                activity: "Nearby Discovery",
+                duration: "45 min", 
+                description: "Visit a nearby attraction or grab refreshments"
+              }
+            ]
+          }
+        ],
+        dataSource: 'Demo Mode (Google Maps style)',
+        totalResults: 1,
+        searchParams: req.body
+      };
+    }
     
     const duration = Date.now() - startTime;
     console.log(`⚡ Response generated in ${duration}ms using ${result.dataSource}`);
@@ -47,7 +112,7 @@ app.post('/api/recommendations', async (req, res) => {
       ...result,
       meta: {
         processingTime: `${duration}ms`,
-        apiProvider: 'Google Maps Platform',
+        apiProvider: result.dataSource,
         generatedAt: new Date().toISOString()
       }
     });
