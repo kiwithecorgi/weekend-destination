@@ -3,7 +3,6 @@ services:
   - type: web
     name: weekender-backend
     env: node
-    plan: free
     buildCommand: cd server && npm install
     startCommand: cd server && npm start
     envVars:
@@ -30,7 +29,6 @@ services:
   - type: web
     name: weekender-frontend
     env: static
-    plan: free
     buildCommand: cd client && npm install && npm run build
     staticPublishPath: client/build
     envVars:
