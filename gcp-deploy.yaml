@@ -1,0 +1,28 @@
+# Google Cloud Run deployment configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: weekender-config
+data:
+  # Backend service configuration
+  backend:
+    name: weekender-backend
+    image: gcr.io/PROJECT_ID/weekender-backend
+    port: 8080
+    env:
+      - NODE_ENV=production
+      - PORT=8080
+    # Add your API keys here during deployment
+    secrets:
+      - GOOGLE_PLACES_API_KEY
+      - GOOGLE_MAPS_API_KEY
+      - GOOGLE_GEOCODING_API_KEY
+      - OPENWEATHER_API_KEY
+
+  # Frontend service configuration
+  frontend:
+    name: weekender-frontend
+    image: gcr.io/PROJECT_ID/weekender-frontend
+    port: 8080
+    env:
+      - REACT_APP_API_URL=https://weekender-backend-HASH-uc.a.run.app 
