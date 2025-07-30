@@ -26,9 +26,8 @@ services:
         sync: false
 
   # Frontend Static Site
-  - type: web
+  - type: static
     name: weekender-frontend
-    env: static
     buildCommand: cd client && npm install && npm run build
     staticPublishPath: client/build
     envVars:
