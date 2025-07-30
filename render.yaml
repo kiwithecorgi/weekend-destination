@@ -29,10 +29,10 @@ services:
   # Frontend Static Site
   - type: web
     name: weekender-frontend
-    env: node
+    env: static
     plan: free
     buildCommand: cd client && npm install && npm run build
-    startCommand: cd client && npm start
+    staticPublishPath: client/build
     envVars:
       - key: REACT_APP_API_URL
         value: https://weekender-backend.onrender.com 
